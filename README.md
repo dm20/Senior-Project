@@ -12,6 +12,5 @@ to a separate storage location that can be accessed by the Bio department.
 # Additional Info:
 As of now the storage service that will be used is the LMU Box cloud server.
 Other cloud storage services are being looked into as well. Whichever system is the most compatible with the Pi
-will be used (i.e. the mutt or mailx command line tools, which allow the user to send an email in one line from the linux terminal
-on the Pi).
+will be used (possibly the "mutt" or "mailx" command line tools, which allow the user to send an email with attachment in one line from the linux terminal on the Raspberry Pi).
 
