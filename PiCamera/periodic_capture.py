@@ -1,6 +1,5 @@
 # Periodic photo capture script
-# Rev #2
-# TODO: image object, I/O, remote storage
+# TODO: full test
 
 from picamera import PiCamera
 from time import sleep
