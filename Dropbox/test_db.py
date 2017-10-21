@@ -1,6 +1,8 @@
 import dropbox 
 
-db = dropbox.Dropbox('9Z0y_pZ_w8sAAAAAAAAAr6wdpjNlg0XW9hTL0RIdNzkWTSfFUYZB23IQKTOjkMi8')
+access = ''
+
+db = dropbox.Dropbox(access)
 db.users_get_current_account()
 
 return 0
