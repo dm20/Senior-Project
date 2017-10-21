@@ -3,9 +3,11 @@
 
 import dropbox
 
+access = ''
+
 file1 = open('image.jpg').read()
 
-db = dropbox.Dropbox('ippz4jAbhKAAAAAAAAAACSgGqnfO0L2JvjAb-YJ6l7KWZqo3uGLsjSU6d6afDKse')
+db = dropbox.Dropbox(access)
 
 db.files_upload(file1,'/new_pic.jpg')
 
