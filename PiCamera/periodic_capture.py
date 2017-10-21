@@ -7,6 +7,8 @@ from time import sleep
 import RPi.GPIO as GPIO
 import dropbox
 
+access = ''
+
 # LED drive
 GPIO.setwarnings(False);
 GPIO.setmode(GPIO.BCM);
@@ -30,7 +32,7 @@ camera.stop_preview()
 def db_upload(image, num):
   upload_name = '/' + img + str(num) + '.jpg'
   file1 = open(image).read()
-  db = dropbox.Dropbox('ippz4jAbhKAAAAAAAAAACSgGqnfO0L2JvjAb-YJ6l7KWZqo3uGLsjSU6d6afDKse')
+  db = dropbox.Dropbox(access)
   db.files_upload(file1,upload_name)
 
 # periodically capture pictures and upload to dropbox
