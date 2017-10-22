@@ -1,4 +1,4 @@
-# LMU Senior-Project 2017
+# LMU EE/CS Dept. Senior-Project - Slime Mold Monitoring and Imaging System
 
 # Purpose: 
 Provide LMU Biology Department with camera system for monitoring the growth of slime mold, 
