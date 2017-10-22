@@ -10,7 +10,9 @@ The program will periodically take pictures of the slime as it grows and then st
 to a separate storage location that can be accessed by the Bio department. 
 
 # Additional Info:
-As of now the storage service that will be used is the LMU Box cloud server.
-Other cloud storage services are being looked into as well. Whichever system is the most compatible with the Pi
-will be used (possibly the "mutt" or "mailx" command line tools, which allow the user to send an email with attachment in one line from the linux terminal on the Raspberry Pi).
+Currently we are using the Dropbox Python API for developers in order to upload photos
+taken by the Pi in real time. One of our next steps is to develop a user interface for the 
+system using either a command line tool (bash script wrapper) or a python GUI using PyQt.
+We are also considering the option of running the camera system immediately once the Pi
+is supplied with power.
 
