@@ -17,9 +17,11 @@ def prev():
     camera.stop_preview() # end preview
 
 # button init
-b = Button(master, text="Camera Preview", command=prev)
+b = Button(root, text="Camera Preview", command=prev)
 b.pack()
 
 # label init
 label.pack()
+
+#run gui
 root.mainloop()
