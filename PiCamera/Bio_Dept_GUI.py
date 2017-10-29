@@ -7,6 +7,10 @@ import sys
 
 # initialize the GUI
 root = Tk()
+root.wm_title("Slime Mold Growth Tracking System")
+width = 500
+height = 200
+root.minsize(width,height)
 
 # photo capture status indicator (initially off)
 system_state = 0
@@ -42,15 +46,15 @@ def kill():
 
 # preview button init
 b = Button(root, text="Camera Preview", command=prev)
-b.pack()
+b.place(relx=0.1,rely=0.1)
 
 # run capture button init
 b1 = Button(root, text="Begin Photo Capture", command=run)
-b1.pack()
+b1.place(relx=0.5,rely=0.1)
 
 # run capture button init
 b2 = Button(root, text="End Photo Capture", command=kill)
-b2.pack()
+b2.place(relx=0.51,rely=0.3)
 
 #run gui
 root.mainloop()
