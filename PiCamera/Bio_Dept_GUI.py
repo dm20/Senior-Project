@@ -42,7 +42,7 @@ def kill():
     global system_state
     if (system_state == 1):
         system_state = 0
-        quit()            # kill the GUI and update system state (needs to be modified)
+        quit()            # kill the GUI and update system state
 
 # preview button init
 b = Button(root, text="Camera Preview", command=prev)
