@@ -22,7 +22,7 @@ uploader = Uploader()
 # callback function for camera preview
 def preview():
     global disablePreview
-    if (!disablePreview):     # only allow the preview feature to run when the system is not capturing
+    if (not disablePreview):     # only allow the preview feature to run when the system is not capturing
         camera = PiCamera()     # initialize camera
         camera.resolution = (768,768)
         camera.start_preview()  # display camera preview on monitor
