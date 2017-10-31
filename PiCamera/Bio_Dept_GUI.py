@@ -1,26 +1,25 @@
-#!/usr/bin/python
 from tkinter import *
 from picamera import PiCamera
 from time import sleep
 import os
 import sys
+from dropbox_interface import Uploader
 
-# initialize the GUI
+# GUI init
 root = Tk()
 root.wm_title("Slime Mold Growth Tracking System")
 width = 500
 height = 200
 root.minsize(width,height)
 
-# photo capture status indicator (initially off)
+# photo capture status indicator
 system_state = 0
-	
-# title of GUI
-label = Label(root,text="Slime Mold GUI")
-label.pack()
+
+# instantiate an uploader class
+uploader = Uploader()
 
 # callback function for camera preview
-def prev():
+def preview():
     global system_state
     if (system_state == 0):
         camera = PiCamera()     # initialize camera
@@ -33,19 +32,21 @@ def prev():
 # callback function for photo capture
 def run():
     global system_state
-    if (system_state == 0):
-        system_state = 1
-        os.system('python /home/pi/periodic_capture.py') # run the dropbox upload script
-
+    global uploader
+    if (uploader.running == 0): # if the stop button was hit, reset the uploader for next time the run button is it
+        uploader.running = 1
+        return
+    uploader.run()      # capture and upload a picture to dropbox
+    root.after(500,run) # wait half a second between uploads for the user to stop the program if needed (whenever the stop button is hit the request is processed anyways)
+        
 # callback function for ending photo capture
 def kill():
-    global system_state
-    if (system_state == 1):
-        system_state = 0
-        quit()            # kill the GUI and update system state
-
+    global uploader
+    uploader.stop()     # turn off the uploader
+    return
+        
 # preview button init
-b = Button(root, text="Camera Preview", command=prev)
+b = Button(root, text="Camera Preview", command=preview)
 b.place(relx=0.1,rely=0.1)
 
 # run capture button init
@@ -58,3 +59,5 @@ b2.place(relx=0.51,rely=0.3)
 
 #run gui
 root.mainloop()
+
+
