@@ -16,10 +16,10 @@ class Uploader():
   secondsPerHour = 5
   running = 1          # running = button input signal indicates system on
   count = 0
-  path = 'testing_path_'
+  path = 'sample_capture_'
 
   def db_upload(self,image, num):
-    upload_name = '/' + self.path + str(num) + '.jpg' # edit the file path
+    upload_name = '/' + self.path + str(num) + '_' + time.strftime("%B_%d_%Y_%X") + '.jpg' # filename with date and photo number
     file1 = open(image).read()
     db = dropbox.Dropbox('') # initialize dropbox folder access (access key removed)
     db.files_upload(file1,upload_name) # upload the file
