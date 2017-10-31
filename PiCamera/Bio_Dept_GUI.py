@@ -14,15 +14,15 @@ height = 200
 root.minsize(width,height)
 
 # photo capture status indicator
-system_state = 0
+disablePreview = False
 
 # instantiate an uploader class
 uploader = Uploader()
 
 # callback function for camera preview
 def preview():
-    global system_state
-    if (system_state == 0):     # only allow the preview feature to run when the system is not capturing
+    global disablePreview
+    if (!disablePreview):     # only allow the preview feature to run when the system is not capturing
         camera = PiCamera()     # initialize camera
         camera.resolution = (768,768)
         camera.start_preview()  # display camera preview on monitor
@@ -33,10 +33,11 @@ def preview():
 # callback function for photo capture
 def run():
     global uploader
-    global system_state
-    system_state = 1
+    global disablePreview
+    disablePreview = True
     if (uploader.running == 0): # if the stop button was hit, reset the uploader for next time the run button is it
         uploader.running = 1
+        disablePreview = False    # allow preview functionality while system is not capturing
         return
     uploader.run()      # capture and upload a picture to dropbox
     root.after(500,run) # wait half a second between uploads for the user to stop the program if needed
@@ -44,8 +45,6 @@ def run():
 # callback function for ending photo capture
 def kill():
     global uploader
-    global system_state
-    system_state = 0
     uploader.stop()     # turn off the uploader
     return
         
