@@ -1,6 +1,4 @@
-# Periodic photo capture script
-# Rev #2
-# TODO: time stamping, button for on/off
+# Periodic photo capture script that lights an LED each time a photo is captured
 
 from picamera import PiCamera
 from time import sleep
@@ -19,7 +17,7 @@ GPIO.output(pin,0)
 # camera and timing elements
 camera = PiCamera()     # initialize camera
 numHours = 2
-secondsPerHour = 5
+secondsPerHour = 3600
 running = 1          # running = button input signal indicates system on
 count = 0;
 img = 'image_0'
