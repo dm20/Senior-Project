@@ -14,3 +14,4 @@ to a separate storage location that can be accessed by the Bio department lab st
 Currently we are using the Dropbox Python API for developers in order to upload photos
 taken by the Pi in real time. We are using the tkinter library for making a GUI.
 
+![](lmuseaver.jpg)![](1024px-Python-logo-notext.svg.png)![](Raspberry_Pi_Logo.svg.png)![](Dropbox-Logo.png)
