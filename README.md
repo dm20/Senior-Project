@@ -1,6 +1,6 @@
 # **Slime Mold Monitoring and Imaging System**
 ### **LMU EE/CS Department Senior Project**
-
+![](images/oie_124645G3I2Cvl3.jpg)
 #### Purpose:
 Provide LMU Biology Department with camera system for monitoring the growth of slime mold, 
 a simple yet fascinating amoeba.
