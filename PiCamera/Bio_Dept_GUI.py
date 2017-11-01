@@ -1,10 +1,12 @@
-from tkinter import *
-from picamera import PiCamera
-import time
-from time import sleep
-import os
-import sys
 from dropbox_interface import Uploader
+from picamera import PiCamera
+from time import sleep
+from tkinter import *
+import time
+import sys
+import os
+
+
 
 # GUI init
 root = Tk()
