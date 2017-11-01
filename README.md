@@ -3,7 +3,7 @@
 ![](images/oie_124645G3I2Cvl3-1.jpg)
 
 
-*Physarum Polycephalum Plasmodium*
+*Physarum Polycephalum Plasmodium (Slime Mold)*
 ### Purpose:
 Provide LMU Biology Department with camera system for monitoring the growth of slime mold, 
 a simple yet fascinating amoeba.
