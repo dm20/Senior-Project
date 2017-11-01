@@ -1,5 +1,5 @@
 # **Slime Mold Monitoring and Imaging System**
-### **LMU EE/CS Department Senior Project**
+## **LMU EE/CS Department Senior Project**
 <img src="images/oie_124645G3I2Cvl3-1.jpg" width="300" hspace="5">
 
 *Physarum Polycephalum Plasmodium (Slime Mold)*
