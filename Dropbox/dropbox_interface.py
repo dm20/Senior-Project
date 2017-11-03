@@ -2,6 +2,7 @@ from picamera import PiCamera
 import RPi.GPIO as GPIO
 from time import sleep
 import dropbox
+import time
 
 class Uploader():
   # LED drive
@@ -23,21 +24,23 @@ class Uploader():
 
   def db_upload(self,image,num):
     upload_filename = '/' + self.path + str(num) + '_' + time.strftime("%B_%d_%Y_%X") + '.jpg'
-    fileToUpload = open(image).read()
+    fileToUpload = open(image,mode='rb').read()
     db = dropbox.Dropbox('') # initialize dropbox folder access (access key removed)
     db.files_upload(fileToUpload,upload_filename) # upload the file
-
+    
   # periodically capture pictures and upload to dropbox
   def run(self):
-    if (self.running & count < numberOfPhotos):
+    if (self.running & self.count < self.numberOfPhotos):
       camera = PiCamera() # open the camera
       temp_path = self.path + '.jpg' 
       self.count+=1   # increment the photo ID count
       GPIO.output(self.pin,1) # turn on the LED
+      sleep(0.4)
       camera.capture(temp_path)     # capture photo while the light is on
+      sleep(0.4)
       GPIO.output(self.pin,0) # turn off the LED      # turn off the light
       self.db_upload(temp_path,self.count)
-      sleep(self.captureInterval - 0.5)  # delay between captures (GUI waits 0.5s per call)
+      sleep(self.captureInterval - 1.3)  # delay between captures (subtract GUI and capture delay)
       camera.close()   # close the camera between captures in case it is needed elsewhere
       
   def stop(self):
