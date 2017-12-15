@@ -40,10 +40,7 @@ class Uploader():
       sleep(2)
       upload_filename = self.path + str(self.count) + '_' + time.strftime("%B_%d_%Y_%X") + '.jpg'
       completeName = os.path.join(self.save_path, upload_filename)
-      #print(self.save_path)
-      #print(completeName)
       camera.capture(completeName)
-      #print('here:(')
       file = open(completeName)
       sleep(2)
       self.bus.write_byte_data(self.address, self.mode, self.off) # turn off light
