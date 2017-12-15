@@ -1,12 +1,11 @@
 from picamera import PiCamera
 from time import sleep
 import os.path
-import dropbox
 import smbus
 import time
 
 ###################################################
-# This class interfaces with dropbox and controls #
+# This class controls                             #
 # the operation of the camera and light fixture   #
 ###################################################  
 class Uploader():
@@ -20,7 +19,7 @@ class Uploader():
   numberOfPhotos = hoursPerTrial*photosPerHour
   running = 1   # running = button input signal indicates system on
   count = 0
-  path = 'slime_capture' # the uploaded path is in the format: "sample_capture_[count]_[month]_[day]_[year]_[hour]:[min]:[sec]"
+  path = 'slime_capture' # the  path is in the format: "sample_capture_[count]_[month]_[day]_[year]_[hour]:[min]:[sec]"
   address = 0x70 # light fixture address
   mode = 0x00 # light fixture mode (all LEDs on)
   on = 0xFF # light on
@@ -29,9 +28,9 @@ class Uploader():
   save_path = r'/home/pi/Desktop/Slime Growth Captures/'
 
 
-  #######################################################  
-  # periodically capture pictures and upload to dropbox #
-  #######################################################
+  ##################################  
+  # periodically capture pictures  #
+  ##################################
   def run(self):
     if (self.running & self.count < self.numberOfPhotos):
       camera = PiCamera() # open the camera
@@ -51,8 +50,8 @@ class Uploader():
       sleep(self.captureInterval - 4.5)  # delay between captures (subtract GUI and capture delay)
       camera.close()   # close the camera between captures in case it is needed elsewhere
 
-  ########################################    
-  # Discontinue Photo Capture and Upload #
-  ########################################
+  #############################  
+  # Discontinue Photo Capture #
+  #############################
   def stop(self):
       self.running = 0 # stop the run loop from capturing and uploading
