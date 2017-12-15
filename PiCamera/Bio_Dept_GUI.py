@@ -1,4 +1,4 @@
-from dropbox_interface import Uploader
+from interface import Uploader
 from picamera import PiCamera
 from time import sleep
 from tkinter import *
