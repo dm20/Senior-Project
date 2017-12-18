@@ -5,7 +5,9 @@
 *Physarum Polycephalum Plasmodium (Slime Mold)*
 ### Purpose:
 Provide LMU Biology Department with camera system for monitoring the growth of slime mold, 
-a simple yet fascinating amoeba.
+a simple yet fascinating amoeba.  
+
+<a href= "www.youtube.com/watch?v=GwKuFREOgmo" >This video demonstrates slime mold's impressive intelligence.</a>
 
 ### Overview: 
 This repository contains the code for Raspbeery Pi camera and growth tracking system user interface. 
