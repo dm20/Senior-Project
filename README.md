@@ -16,6 +16,6 @@ locally. Biology department students and staff can access the photos remotely by
 Pi with RealVNC viewer or directly from the Pi via keyboard, monitor, and mouse.
 
 ### Status:
-Currently we are working to maximize the resolution of the captures.
+Currently we are working on maximizing the resolution of the captures.
 
 <img src="images/lmuseaver.jpg" width="110" hspace="5">    <img src="images/1024px-Python-logo-notext.svg.png" width="40" hspace="5">    <img src="images/Raspberry_Pi_Logo.svg.png" width="30" hspace="5">
