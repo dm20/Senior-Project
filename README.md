@@ -8,12 +8,12 @@ Provide LMU Biology Department with camera system for monitoring the growth of s
 a simple yet fascinating amoeba.
 
 ### Overview: 
-This repository contains the code for Pi camera and growth tracking system user interface. 
-The program will periodically take pictures of the slime as it grows and then store the pictures 
-to a separate storage location that can be accessed by the Bio department lab staff and professors.
+This repository contains the code for Raspbeery Pi camera and growth tracking system user interface. 
+The system periodically takes pictures of the slime as it grows and then stores the pictures 
+locally. Biology department students and staff can access the photos remotely by connecting to the 
+Pi with RealVNC viewer or directly from the Pi via keyboard, monitor, and mouse.
 
 ### Status:
-Currently we are using the Dropbox Python API for developers in order to upload photos
-taken by the Pi in real time. We are using the tkinter library for making a GUI.  
+Currently we are working to maximize the resolution of the captures.
 
-<img src="images/lmuseaver.jpg" width="110" hspace="5">    <img src="images/1024px-Python-logo-notext.svg.png" width="40" hspace="5">    <img src="images/Raspberry_Pi_Logo.svg.png" width="30" hspace="5">    <img src="images/Dropbox-Logo.png" width="40" hspace="5">
+<img src="images/lmuseaver.jpg" width="110" hspace="5">    <img src="images/1024px-Python-logo-notext.svg.png" width="40" hspace="5">    <img src="images/Raspberry_Pi_Logo.svg.png" width="30" hspace="5">
