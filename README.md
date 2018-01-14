@@ -19,4 +19,4 @@ Pi with RealVNC viewer or directly from the Pi via keyboard, monitor, and mouse.
 Currently we are working on maximizing the resolution of the captures.
 
 <img src="images/lmuseaver.jpg" width="110" hspace="5">    <img src="images/1024px-Python-logo-notext.svg.png" width="40" hspace="5">    <img src="images/Raspberry_Pi_Logo.svg.png" width="30" hspace="5">
-<img a href="https://www.realvnc.com/en/?gclid=EAIaIQobChMIkKXcwcnY2AIVF_5kCh2iLgHVEAAYASAAEgIBWfD_BwE"src="images/realvnc.jpg" width="40" hspace="3">
+<img src="images/realvnc.jpg" width="40" hspace="3">
