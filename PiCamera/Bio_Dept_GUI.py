@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from interface import Uploader
 from picamera import PiCamera
 from time import sleep
