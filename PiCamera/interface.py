@@ -1,7 +1,8 @@
 from picamera import PiCamera
 from time import sleep
+import RPi.GPIO as GPIO
 import os.path
-import smbus
+#import smbus
 import time
 
 ###################################################
@@ -9,6 +10,23 @@ import time
 # the operation of the camera and light fixture   #
 ###################################################  
 class Uploader():
+  # initialize LED drive pins
+  GPIO.setwarnings(False);
+  GPIO.setmode(GPIO.BCM);
+  pin6 = 6;
+  pin13 = 13; # our switch requires the current of at least 3 GPIO pins
+  pin19 = 19;
+  pin26 = 26;
+  GPIO.setup(pin6,GPIO.OUT);
+  GPIO.setup(pin13,GPIO.OUT); #Configure pins as outputs
+  GPIO.setup(pin19,GPIO.OUT);
+  GPIO.setup(pin26,GPIO.OUT);
+  # ensure initial state of the light system is off
+  GPIO.output(pin6,0);
+  GPIO.output(pin13,0);
+  GPIO.output(pin19,0);
+  GPIO.output(pin26,0);
+  
   # class variables
   photosPerHour = 1    # 1 photo/hour
   secondsPerHour = 3600
@@ -20,11 +38,6 @@ class Uploader():
   running = 1   # running = button input signal indicates system on
   count = 0
   path = 'slime_capture' # the  path is in the format: "sample_capture_[count]_[month]_[day]_[year]_[hour]:[min]:[sec]"
-  address = 0x70 # light fixture address
-  mode = 0x00 # light fixture mode (all LEDs on)
-  on = 0xFF # light on
-  off = 0x00 # light off
-  bus = smbus.SMBus(1) # interface to bus
   save_path = r'/home/pi/Desktop/Slime Growth Captures/'
 
 
@@ -36,15 +49,30 @@ class Uploader():
       camera = PiCamera() # open the camera
       camera.resolution = (3268,2464)
       self.count+=1   # increment the photo ID count
-      self.bus.write_byte_data(self.address, self.mode, self.on) # turn on light
-      sleep(2)
-      upload_filename = self.path + str(self.count) + '_' + time.strftime("%B_%d_%Y_%X") + '.jpg'
+
+      # turn on light
+      GPIO.output(self.pin6,1);
+      GPIO.output(self.pin13,1);
+      GPIO.output(self.pin19,1);
+      GPIO.output(self.pin26,1);
+
+      # Let camera adjust to light
+      sleep(4)
+
+      upload_filename = self.path + str(self.count) + '.jpg'#'_' + time.strftime("%B_%d_%Y_%X") + '.jpg'
       completeName = os.path.join(self.save_path, upload_filename)
       camera.capture(completeName)
       file = open(completeName)
-      sleep(2)
-      self.bus.write_byte_data(self.address, self.mode, self.off) # turn off light
-      sleep(self.captureInterval - 4.5)  # delay between captures (subtract GUI and capture delay)
+      sleep(2)#testing purposes to avoid hourly delay
+
+      # turn off light
+      GPIO.output(self.pin6,0);
+      GPIO.output(self.pin13,0);
+      GPIO.output(self.pin19,0);
+      GPIO.output(self.pin26,0);
+
+
+      #sleep(self.captureInterval - 4.1)  # delay between captures (subtract GUI and capture delay)
       camera.close()   # close the camera between captures in case it is needed elsewhere
 
   #############################  
