@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from interface import Uploader
 from picamera import PiCamera
 from time import sleep
@@ -5,8 +6,24 @@ from tkinter import *
 import time
 import sys
 import os
+import RPi.GPIO as GPIO
 
-
+# GPIO init
+GPIO.setwarnings(False);
+GPIO.setmode(GPIO.BCM);
+pin6 = 6;
+pin13 = 13; # our switch requires the current of at least 3 GPIO pins
+pin19 = 19;
+pin26 = 26;
+GPIO.setup(pin6,GPIO.OUT);
+GPIO.setup(pin13,GPIO.OUT); #Configure pins as outputs
+GPIO.setup(pin19,GPIO.OUT);
+GPIO.setup(pin26,GPIO.OUT);
+GPIO.output(pin6,0);
+GPIO.output(pin13,0);
+GPIO.output(pin19,0);
+GPIO.output(pin26,0);
+ 
 
 # GUI init
 root = Tk()
@@ -27,9 +44,23 @@ def preview():
     if (not disablePreview):     # only allow the preview feature to run when the system is not capturing
         camera = PiCamera()     # initialize camera
         camera.resolution = (768,768)
+
+        # turn on the light
+        GPIO.output(6,1);
+        GPIO.output(13,1);
+        GPIO.output(19,1);
+        GPIO.output(26,1);
+        
         camera.start_preview()  # display camera preview on monitor
         sleep(5)
         camera.stop_preview() # end preview
+
+        GPIO.output(6,0);
+        GPIO.output(13,0);
+        GPIO.output(19,0);
+        GPIO.output(26,0);
+        
+
         camera.close()
 
 # callback function for photo capture
