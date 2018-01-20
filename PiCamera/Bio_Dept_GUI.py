@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#####!/usr/bin/env python3
 from interface import Uploader
 from picamera import PiCamera
 from time import sleep
@@ -6,6 +6,7 @@ import RPi.GPIO as GPIO
 import PIL.Image
 from PIL import ImageTk
 from tkinter import *
+import time
 
 # GPIO init
 GPIO.setwarnings(False);
@@ -95,12 +96,20 @@ b1.place(relx=0.55,rely=0.4)
 b2 = Button(root, text="End Photo Capture", command=kill)
 b2.place(relx=0.56,rely=0.6)
 
-# text for before a thumbnail is displayed
+# text for before the preview is displayed
 msg = Label(root, text='No Slime Capture\nTo Preview Yet', foreground='red')
 msg.place(relx=0.1,rely=0.4)
 
-# current capture preview
+# text for after an image is captured
+textIsUpdated = 0 # boolean for whether or not the text has been updated already (only want it to be done once)
+def updateText():
+    newText = Label(root, text='Most Recent Capture', foreground='blue')
+    newText.place(relx=0.12,rely=0.17)
+    return
+    
+# display preview of most recent capture
 def refreshImageIcon(enable):
+    global textIsUpdated
     imagePath = uploader.getCurrentImagePath()
     if (imagePath != '' and enable == 1):
         imgFile = PIL.Image.open(imagePath)
@@ -110,9 +119,10 @@ def refreshImageIcon(enable):
         icon = Label(root, image=img)
         icon.place(relx=0.09,rely=0.25)
         icon.image = img
+    if (not textIsUpdated):
+        textIsUpdated = 1
+        updateText()
     return
-
+   
 #run gui
 root.mainloop()
-
-
