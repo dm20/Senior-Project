@@ -6,10 +6,6 @@ import RPi.GPIO as GPIO
 import PIL.Image
 from PIL import ImageTk
 from tkinter import *
-import time
-import sys
-import os
-
 
 # GPIO init
 GPIO.setwarnings(False);
