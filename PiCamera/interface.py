@@ -2,8 +2,6 @@ from picamera import PiCamera
 from time import sleep
 import RPi.GPIO as GPIO
 import os.path
-#import smbus
-import time
 
 ###################################################
 # This class controls                             #
@@ -71,7 +69,7 @@ class Uploader():
       GPIO.output(self.pin19,0);
       GPIO.output(self.pin26,0);
 
-      # sleep(self.captureInterval - 4.1)  # delay between captures (subtract GUI and capture delay)
+      sleep(self.captureInterval - 4.1)  # delay between captures (subtract GUI and capture delay)
       camera.close()   # close the camera between captures in case it is needed elsewhere
 
   #############################  
