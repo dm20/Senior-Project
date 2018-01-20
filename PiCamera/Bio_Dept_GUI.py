@@ -2,11 +2,14 @@
 from interface import Uploader
 from picamera import PiCamera
 from time import sleep
+import RPi.GPIO as GPIO
+import PIL.Image
+from PIL import ImageTk
 from tkinter import *
 import time
 import sys
 import os
-import RPi.GPIO as GPIO
+
 
 # GPIO init
 GPIO.setwarnings(False);
@@ -29,7 +32,7 @@ GPIO.output(pin26,0);
 root = Tk()
 root.wm_title("Slime Mold Growth Tracking System")
 width = 500
-height = 200
+height = 300
 root.minsize(width,height)
 
 # photo capture status indicator
@@ -59,9 +62,9 @@ def preview():
         GPIO.output(13,0);
         GPIO.output(19,0);
         GPIO.output(26,0);
-        
 
         camera.close()
+    return
 
 # callback function for photo capture
 def run():
@@ -71,10 +74,13 @@ def run():
     if (uploader.running == 0): # if the stop button was hit, reset the uploader for next time the run button is it
         uploader.running = 1
         disablePreview = False    # allow preview functionality while system is not capturing
+        refreshImageIcon(0)
         return
-    uploader.run()      # capture and upload a picture to dropbox
+    uploader.run()      # capture and save an image
+    refreshImageIcon(1)
     root.after(500,run) # wait half a second between uploads for the user to stop the program if needed
-        
+    return
+
 # callback function for ending photo capture
 def kill():
     global uploader
@@ -83,15 +89,32 @@ def kill():
         
 # preview button init
 b = Button(root, text="Camera Preview", command=preview)
-b.place(relx=0.1,rely=0.4)
+b.place(relx=0.58,rely=0.2)
 
 # run capture button init
 b1 = Button(root, text="Begin Photo Capture", command=run)
-b1.place(relx=0.5,rely=0.25)
+b1.place(relx=0.55,rely=0.4)
 
 # run capture button init
 b2 = Button(root, text="End Photo Capture", command=kill)
-b2.place(relx=0.51,rely=0.55)
+b2.place(relx=0.56,rely=0.6)
+
+# text for before a thumbnail is displayed
+msg = Label(root, text='No Slime Capture\nTo Preview Yet', foreground='red')
+msg.place(relx=0.1,rely=0.4)
+
+# current capture preview
+def refreshImageIcon(enable):
+    imagePath = uploader.getCurrentImagePath()
+    if (imagePath != '' and enable == 1):
+        imgFile = PIL.Image.open(imagePath)
+        size = 200,125 # phi
+        imgFile.thumbnail(size, PIL.Image.ANTIALIAS)
+        img = ImageTk.PhotoImage(imgFile)
+        icon = Label(root, image=img)
+        icon.place(relx=0.09,rely=0.25)
+        icon.image = img
+    return
 
 #run gui
 root.mainloop()
