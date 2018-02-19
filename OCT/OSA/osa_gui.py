@@ -9,20 +9,25 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 ###########################
 #     VISA GPIB INIT      #
 ###########################
+inst = None;
 def initialize():
-	# TODO: http://www.pythonforbeginners.com/error-handling/python-try-and-except
+	global inst
+	# http://www.pythonforbeginners.com/error-handling/python-try-and-except
 	rm = visa.ResourceManager()
 	inst = rm.open_resource('GPIB0::1::INSTR')
 	return
+
+# initialize()
 
 #########################
 # 		GUI SETUP       #
 #########################
 root = Tk()
 root.wm_title("OCT GUI")
-width = 850
+width = 1000
 height = 700
 root.minsize(width,height)
+root.configure(background='lightgray')
 
 fig = plt.figure(1,figsize=(7.1, 7))
 canvas = FigureCanvasTkAgg(fig, master=root)
@@ -40,41 +45,69 @@ peak2 = 0.0
 
 # Sweep the spectrum once on the OSA
 def sweepSingle():
-	### TODO
+	global inst
+	### update plots ???
 	inst.write(':INITIATE')
 	print("Plot Data");
 	return
 
 # Continuously sweep the spectrum on the OSA
 def sweepContinuous():
-	# TODO
+	global inst
+	### update plots based on frequency of OSA sweep using same method as bio_dept_gui checker ???
 	inst.write('SENSE:SWEEP:POINTS:REPEAT ON')
 	inst.write(':INITIATE SMODE REPEAT')
-	print("Plot Continous");
+	inst.write(':INITIATE')
+	print("Plot Continously");
 	return
 
 # set the start wavelength on the OSA and plotting windows in the GUI
 def setStartWavelength():
-	inst.write('SENSE:WAVELENGTH:START 730NM')
+	global inst
+	startWL = e1.get()
+	inst.write('SENSE:WAVELENGTH:START ' + startWL +'NM')
+	inst.write(':INITIATE')
 	print("Set Start WL");
 	return
 
 # set the stop wavelength on the OSA and plotting windows in the GUI
 def setStopWavelength():
-	# inst.write('SENSE:WAVELENGTH:STOP 830NM')
+	global inst
+	stopWL = e2.get()
+	inst.write('SENSE:WAVELENGTH:STOP ' + stopWL + 'NM')
+	inst.write(':INITIATE')
 	print("Set Stop WL");
 	return
 
 # set the reference level of the OSA and plotting windows in the GUI
 def setRefLevel():
-	# inst.write(':DISPLAY:Y1:RLEVEL .1NW')
+	global inst
+	refLevel = e3.get()
+	inst.write(':DISPlAY:TRACE:Y1:SPACING LINEAR')
+	inst.write(':DISPLAY:TRACE:Y1:RLEVEL ' + refLevel + 'NW')
+	inst.write(':INITIATE')
 	print("Set Ref Level");
+	return
+
+# set the reference level scale on the OSA
+def setLogScale():
+	global inst	
+	inst.write(':DISPlAY:TRACE:Y1:PDIVISION 0.5DB')
+	inst.write(':INITIATE')
+	print("Set Log Scale");
+	return 
+
+def setLinearScale():
+	global inst	
+	inst.write(':DISPlAY:TRACE:Y1:SPACING LINEAR')
+	inst.write(':INITIATE')
+	print("Set Lin Scale");
 	return
 
 # Clear the plotting windows in the GUI
 def clearPlotWindow():
-  ## TODO
-  print("Clear Plot Window");
+	### matplotlib clear window function ???
+	print("Clear Plot Window");
 	return
  
 # Plot the spectrum data in the GUI immediately  
@@ -99,7 +132,6 @@ def plotSpectrumData():
 	plt.hold(True)
 	computeWidth()
 	findPeaks()
-	
 	plot_widget.place(relx = 0.05, rely = 0.05)
 	return
 
@@ -149,16 +181,23 @@ def computeWidth():
 ####################################
 #  SPECTRUM DATA PLOTTING BUTTONS  #
 ####################################
+x_shift = 0.1;
+y_shift = 0.1;
+plotting_div = Label(root, background='gray', height=20,width=30)
+plotting_div.place(relx=0.75 - x_shift,rely=0.15 - y_shift)
+plotting_div_text = Label(root, text='DATA AQUISITION', background='gray',foreground='black',borderwidth=2, relief="groove")
+plotting_div_text.place(relx=0.75 - x_shift,rely=0.15 - y_shift)
+
 b1 = Button(root, text="Single Sweep", command=sweepSingle)
-b1.place(relx=0.80,rely=0.2)
+b1.place(relx=0.80 - x_shift,rely=0.2 - y_shift)
 
 # run capture button init
 b2 = Button(root, text="Continuous Sweep", command=sweepContinuous)
-b2.place(relx=0.80,rely=0.3)
+b2.place(relx=0.80 - x_shift,rely=0.3 - y_shift)
 
 # run capture button init
 b3 = Button(root, text="Clear Plot Windows", command=clearPlotWindow)
-b3.place(relx=0.80,rely=0.4)
+b3.place(relx=0.80 - x_shift,rely=0.4 - y_shift)
 
 b4 = Button(root, text="Plot Spectrum Data", command=plotSpectrumData)
 b4.place(relx=0.3,rely=0.924)
@@ -169,23 +208,43 @@ b4.place(relx=0.3,rely=0.924)
 
 def updateHeightMeasurement(height):
 	msg = Label(root, text='Sample Height: ' + str(round(height,6)*1000) + ' mm', background='yellow',foreground='blue')
-	msg.place(relx=0.5,rely=0.93)
+	msg.place(relx=0.46,rely=0.93)
 	return
 
-##############################
-#  OSA SETTINGS BUTTONS      #
-##############################
+#############################################
+#  OSA SETTINGS BUTTONS AND TEXTFIELDS      #
+#############################################
+y_shift = 0.15;
+settings_div = Label(root, background='lightblue', height=20,width=30)
+settings_div.place(relx=0.75 - x_shift,rely=0.55 - y_shift)
+settings_div_text = Label(root, text='OSA DISPLAY SETTINGS', background='lightblue',foreground='black',borderwidth=2, relief="groove")
+settings_div_text.place(relx=0.75 - x_shift,rely=0.55 - y_shift)
+
 # preview button init
 b6 = Button(root, text="Set Start Wavelength", command=setStartWavelength)
-b6.place(relx=0.80,rely=0.6)
+b6.place(relx=0.80 - x_shift,rely=0.6 - y_shift)
+e1 = Entry(root)
+e1.place(relx=0.80 - x_shift,rely=0.65 - y_shift)
 
 # run capture button init
 b7 = Button(root, text="Set Stop Wavelength", command=setStopWavelength)
-b7.place(relx=0.80,rely=0.7)
+b7.place(relx=0.80 - x_shift,rely=0.7 - y_shift)
+e2 = Entry(root)
+e2.place(relx=0.80 - x_shift,rely=0.75 - y_shift)
 
 # run capture button init
 b8 = Button(root, text="Set Reference Level", command=setRefLevel)
-b8.place(relx=0.80,rely=0.8)
+b8.place(relx=0.80 - x_shift,rely=0.8 - y_shift)
+e3 = Entry(root)
+e3.place(relx=0.80 - x_shift,rely=0.85 - y_shift)
+
+# run capture button init
+b9 = Button(root, text="LINEAR SCALE", command=setLinearScale)
+b9.place(relx=0.80 - x_shift,rely=0.90 - y_shift)
+
+# run capture button init
+b10 = Button(root, text="LOGARITHMIC SCALE", command=setLogScale)
+b10.place(relx=0.80 - x_shift,rely=0.95 - y_shift)
 
 ##########################
 #      RUN THE GUI       #
