@@ -21,7 +21,7 @@ Pi with RealVNC viewer or directly from the Pi via keyboard, monitor, and mouse.
 are the programs used to analyze the spectral data produced by the OCT system.
 
 ## Status:
-Currently we are working on simplifying the camera system's hardware. We are also calibrating the OCT system; so far we are using spectral data simulated in MATLAB to calculate the height of a sample at a single point.
+Currently we are working on simplifying the camera system's hardware. We are also calibrating the OCT system; so far we are using spectral data simulated in MATLAB to calculate the height of a sample at a single point in the GUI.
 
 <img src="images/lmuseaver.jpg" width="110" hspace="5">    <img src="images/1024px-Python-logo-notext.svg.png" width="40" hspace="5">    <img src="images/Raspberry_Pi_Logo.svg.png" width="30" hspace="5">
 <img src="images/realvnc.jpg" width="40" hspace="3">
