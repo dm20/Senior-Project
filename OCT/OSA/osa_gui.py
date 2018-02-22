@@ -202,10 +202,6 @@ b3.place(relx=0.80 - x_shift,rely=0.4 - y_shift)
 b4 = Button(root, text="Plot Spectrum Data", command=plotSpectrumData)
 b4.place(relx=0.3,rely=0.924)
 
-# incorporate this button if the height computation should be separated from plotting the spectrum
-# b5 = Button(root, text="Compute Height", command=computeWidth)
-# b5.place(relx=0.3,rely=0.95)
-
 def updateHeightMeasurement(height):
 	msg = Label(root, text='Sample Height: ' + str(round(height,6)*1000) + ' mm', background='yellow',foreground='blue')
 	msg.place(relx=0.46,rely=0.93)
