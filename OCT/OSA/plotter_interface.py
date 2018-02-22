@@ -20,7 +20,3 @@ class plotter():
 		if (kind == 'fringe'):
 			return self.fringes
 		return
-		
-	def formatData(self):
-		# delimit values with commas for numpy array format
-		return
