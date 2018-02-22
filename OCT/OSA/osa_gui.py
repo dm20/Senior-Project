@@ -119,7 +119,7 @@ def plotSpectrumData():
 
 	plt.subplot(211)
 	data = pf.getSpectrumData('fringe')
-	wavelengths = np.linspace(730,830,len(data))
+	wavelengths = np.linspace(765,795,len(data))
 	plt.plot(wavelengths,data)
 	plt.axis([np.amin(wavelengths), np.amax(wavelengths), np.amin(data), np.amax(data)*1.1])
 
