@@ -17,7 +17,7 @@ def initialize():
 	inst = rm.open_resource('GPIB0::1::INSTR')
 	return
 
-# initialize()
+initialize()
 
 #########################
 # 		GUI SETUP       #
@@ -55,8 +55,7 @@ def sweepSingle():
 def sweepContinuous():
 	global inst
 	### update plots based on frequency of OSA sweep using same method as bio_dept_gui checker ???
-	inst.write('SENSE:SWEEP:POINTS:REPEAT ON')
-	inst.write(':INITIATE SMODE REPEAT')
+	inst.write(':INITIATE:SMODE 2')
 	inst.write(':INITIATE')
 	print("Plot Continously");
 	return
