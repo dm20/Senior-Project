@@ -46,7 +46,7 @@ class Uploader():
       GPIO.output(self.pin26,1);
 
       # Let camera adjust to light
-      #sleep(2)
+      sleep(2)
 
       upload_filename = self.path + str(self.count) + '_' + time.strftime("%B_%d_%Y_%X") + '.jpg'
       self.currentPath = os.path.join(self.save_path, upload_filename)
