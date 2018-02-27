@@ -12,9 +12,9 @@ class Uploader():
   # initialize LED drive pins
   GPIO.setwarnings(False);
   GPIO.setmode(GPIO.BCM);
-  pin26 = 26;
-  GPIO.setup(pin26,GPIO.OUT);
-  GPIO.output(pin26,0);
+  pin19 = 19;
+  GPIO.setup(pin19,GPIO.OUT);
+  GPIO.output(pin19,0);
   
   # class variables
   photosPerHour = 1    # 1 photo/hour
@@ -43,7 +43,7 @@ class Uploader():
       self.count += 1   # increment the photo ID count
 
       # turn on light
-      GPIO.output(self.pin26,1);
+      GPIO.output(self.pin19,1);
 
       # Let camera adjust to light
       sleep(2)
@@ -54,7 +54,7 @@ class Uploader():
       file = open(self.currentPath)
 
       # turn off light
-      GPIO.output(self.pin26,0);
+      GPIO.output(self.pin19,0);
 
       camera.close()   # close the camera between captures in case it is needed elsewhere
     return
