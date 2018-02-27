@@ -15,6 +15,7 @@ def initialize():
 	# http://www.pythonforbeginners.com/error-handling/python-try-and-except
 	rm = visa.ResourceManager()
 	inst = rm.open_resource('GPIB0::1::INSTR')
+	inst.timeout = 30000;
 	return
 
 initialize()
@@ -111,22 +112,41 @@ def clearPlotWindow():
  
 # Plot the spectrum data in the GUI immediately  
 def plotSpectrumData():
+	inst.write(':MMEMory:CDIRectory "SlimeMold"')
+	cmd = ':MMEMory:STORe:TRACE TRA, CSV,"plot",INT'  #WORKS!!!!!
+	inst.write(cmd)
+
+	values = (inst.query(':MMEMory:DATA? "plot.CSV"'))
+	s = "[TRACE DATA]";
+	i = values.index(s) + len(s) + 4
+	y = values[i:len(values)]
+	y = y.split('\r\n')
+	z = zip(y[0::2], y[1::2])
+	mags = []
+	for i in range(len(z)-1):
+		elm = z[i]
+		mags = mags + [float(elm[0].split(",",1)[1])]
+		mags = mags + [float(elm[1].split(",",1)[1])]
+
+	zeros = [0] * (len(mags)/2);
+	mags = zeros + mags + zeros
+
 	pf = plotter()
 	fig = plt.figure(1,figsize=(7.1, 7))
 	canvas = FigureCanvasTkAgg(fig, master=root)
 	plot_widget = canvas.get_tk_widget()
 
 	plt.subplot(211)
-	data = pf.getSpectrumData('fringe')
-	wavelengths = np.linspace(765,795,len(data))
-	plt.plot(wavelengths,data)
-	plt.axis([np.amin(wavelengths), np.amax(wavelengths), np.amin(data), np.amax(data)*1.1])
+	# data = pf.getSpectrumData('fringe')
+	wavelengths = np.linspace(755.63,805.63,len(mags))
+	plt.plot(wavelengths,mags)
+	plt.axis([np.amin(wavelengths), np.amax(wavelengths), np.amin(mags), np.amax(mags)*1.1])
 
 	plt.subplot(212)
-	data = pf.getSpectrumData('peak')
-	time = np.linspace(0,1e-9,len(data))
-	plt.plot(time,data,color='red')
-	plt.axis([np.amin(time), np.amax(time), np.amin(data), np.amax(data)*1.1])
+	peaks = np.unwrap(np.fft.fftshift(np.abs(np.fft.ifft(mags))))
+	time = np.linspace(0,1e-9,len(mags))
+	plt.plot(time,peaks,color='red')
+	plt.axis([np.amin(time), np.amax(time), np.amin(peaks), np.amax(peaks)*1.1])
 	
 	plt.hold(True)
 	computeWidth()
