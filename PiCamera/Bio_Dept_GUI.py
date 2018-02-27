@@ -12,9 +12,9 @@ import time
 # GPIO init
 GPIO.setwarnings(False);
 GPIO.setmode(GPIO.BCM);
-pin26 = 26;
-GPIO.setup(pin26,GPIO.OUT);
-GPIO.output(pin26,0);
+pin19 = 19;
+GPIO.setup(pin19,GPIO.OUT);
+GPIO.output(pin19,0);
 
 # GUI init
 root = Tk()
@@ -38,14 +38,14 @@ def preview():
         camera.resolution = (768,768)
 
         # turn on the lights
-        GPIO.output(26,1);
+        GPIO.output(pin19,1);
         
         camera.start_preview()  # display camera preview on monitor
         sleep(5)
         camera.stop_preview() # end preview
 
         # turn off the lights
-        GPIO.output(26,0);
+        GPIO.output(pin19,0);
 
         camera.close()
     return
