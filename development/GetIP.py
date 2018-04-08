@@ -1,39 +1,48 @@
 #GetIP.py
-# This function requires having made the following bash script
-# saved in the root foler (~/Users/Username/) prior to execution
-# The contents of this bash script should be the following:
+
+import time # for file name matching
+import subprocess # to execute bash scripts
+
+now = time.strftime("%Y%m%d%H%m")
+
+# create the text file containing ifconfig data
+# obtain ifconfig as a text file with executable ifconfig_to_txt.sh:
 #-----------------------------------------------------------
 # #!/bin/bash
-# ifconfig > $(date '+%Y%m%d%H%m%S').txt
+# ifconfig > $(date '+%Y%m%d%H%m').txt
 #-----------------------------------------------------------
+cmd1 = ['./ifconfig_to_txt.sh']
+p1 = subprocess.Popen(cmd1, stdout=subprocess.PIPE)
+p1.wait()
 
-import time
-import subprocess
-
-now = time.strftime("%Y%m%d%H%m%S")
-
-cmd = ['./scr2.sh']
-p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-p.wait()
-
+# get relavent contents
 filename = now + '.txt'
-
 inetLines = []
 with open(filename) as inputfile:
     for line in inputfile:
         if "inet " in line:
+            line = line.strip(' ')
             inetLines.append(line.split(' '))
 
-        IPAddresses = []
-        for i in range(len(inetLines)):
-            IPAddresses.append(inetLines[i][1])
+# delete the text file with executable garbage_collection.sh
+#-----------------------------------------------------------
+# #!/bin/bash
+# rm $(date '+%Y%m%d%H%m').txt
+#-----------------------------------------------------------
+cmd2 = ['./garbage_collection.sh']
+p2 = subprocess.Popen(cmd2, stdout=subprocess.PIPE)
+p2.wait()
 
-# Next we assume the longer IP address is the active one
-# and that there are exactly two to choose from
-# (needs verification)            
-for i in range(len(IPAddresses)):
-    if len(IPAddresses[0]) > len(IPAddresses[1]):
-        ans = IPAddresses[0]
-    else:
-        ans = IPAddresses[1]
+# Now we assume that the IP Address is located in the line that has
+# the most information (maximum length) since the boadcast
+# information is usually stored in the relevant line
+# (needs verification)
+inetLineLengths=[]      
+IPAddresses = []
+for i in range(len(inetLines)):
+    inetLineLengths.append(len(inetLines[i]))
+
+ithLine = inetLineLengths.index(max(inetLineLengths))
+
+ans = inetLines[ithLine][1]
 print(ans)
