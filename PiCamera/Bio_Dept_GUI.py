@@ -95,7 +95,7 @@ def pause():
     updatePauseText(pauseSequence)
     return
 
-# callback function for pausing photo capture
+# callback function for retrieving the Pi's current IP address
 def GetIP():
     #GetIP.py
 
