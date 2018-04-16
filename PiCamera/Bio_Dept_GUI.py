@@ -181,10 +181,13 @@ def updatePauseText(mode):
     return
     
 # display preview of most recent capture
+imgFile = None;
 def refreshImageIcon(enable):
     #global textIsUpdated
     imagePath = uploader.getCurrentImagePath()
     if (imagePath != '' and enable == 1):
+        if (imgFile != None):
+           imgFile.close()
         imgFile = PIL.Image.open(imagePath)
         size = 200,125 # phi
         imgFile.thumbnail(size, PIL.Image.ANTIALIAS)
