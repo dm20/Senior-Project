@@ -183,7 +183,7 @@ def updatePauseText(mode):
 # display preview of most recent capture
 imgFile = None;
 def refreshImageIcon(enable):
-    #global textIsUpdated
+    global imgFile
     imagePath = uploader.getCurrentImagePath()
     if (imagePath != '' and enable == 1):
         if (imgFile != None):
