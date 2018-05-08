@@ -6,8 +6,8 @@
 This repository contains the code for Raspbeery Pi camera and growth tracking system user interface. 
 The system periodically takes pictures of the slime as it grows and then stores the pictures 
 locally. Biology department students and staff can access the photos remotely by connecting to the 
-Pi with RealVNC viewer or directly from the Pi via keyboard, monitor, and mouse. Also contained in this repository
-are the programs used to analyze the spectral data produced by the OCT system.
+Pi with RealVNC viewer or directly from the Pi via touchscreen. Also contained in this repository
+are the programs used to calculate sample height based on the spectral data produced by the OCT system.
 
 *Physarum Polycephalum Plasmodium (Slime Mold)*
 ## Purpose:
