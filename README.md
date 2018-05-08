@@ -4,14 +4,14 @@
 
 *Physarum Polycephalum Plasmodium (Slime Mold)*
 ## Purpose:
-### Phase 1)
+### Phase 1) SMICS (Slime Mold Incubator Camera System)
 Provide LMU Biology Department with a camera system for monitoring the growth of slime mold, 
 a simple yet fascinating amoeba. 
 
 <a href= "https://www.youtube.com/watch?v=GwKuFREOgmo" >This video demonstrates slime mold's impressive intelligence.</a>
 
-### Phase 2)
-Build and test an <a href= "https://en.wikipedia.org/wiki/Optical_coherence_tomography" >Optical Coherence Tomography (OCT)</a> system that generates 3D images of biological samples such as slime mold. The baseline task of the team is to create an OCT system that can measure the height of a sample at a single point. This process can then be used to generate 3D models of the sample by scanning a 2D area and plotting the heights in 3D.
+### Phase 2) OCT (Optical Coherence Tomography)
+Build and test an <a href= "https://en.wikipedia.org/wiki/Optical_coherence_tomography" >Optical Coherence Tomography (OCT)</a> system that generates 3D images of biological samples such as slime mold. The baseline task of the team is to create an interferometer that can measure the height and density of a sample at a single point. This process can then be used to generate 3D models of the sample by scanning a 2D area and plotting the heights in 3D. 
 
 ## Overview: 
 This repository contains the code for Raspbeery Pi camera and growth tracking system user interface. 
@@ -21,7 +21,7 @@ Pi with RealVNC viewer or directly from the Pi via keyboard, monitor, and mouse.
 are the programs used to analyze the spectral data produced by the OCT system.
 
 ## Status:
-Currently we are working on simplifying the camera system's hardware. We are also calibrating the OCT system; so far we are using spectral data simulated in MATLAB to calculate the height of a sample at a single point in the GUI.
+SMICS has been delivered to the LMU Biology Department and is in use. The interferometer was successfully set up and can measure a sample height with resolution of 25 micrometer over a 9mm range (sample heights can be up to 9mm).
 
 <img src="images/lmuseaver.jpg" width="110" hspace="5">    <img src="images/1024px-Python-logo-notext.svg.png" width="40" hspace="5">    <img src="images/Raspberry_Pi_Logo.svg.png" width="30" hspace="5">
 <img src="images/realvnc.jpg" width="40" hspace="3">
