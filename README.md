@@ -11,18 +11,20 @@ are the programs used to analyze the spectral data produced by the OCT system.
 
 *Physarum Polycephalum Plasmodium (Slime Mold)*
 ## Purpose:
-### Phase 1) SMICS (Slime Mold Incubator Camera System)
+### Phase 1: SMICS (Slime Mold Incubator Camera System)
 Provide LMU Biology Department with a camera system for monitoring the growth of slime mold, 
 a simple yet fascinating amoeba. 
 
-<img src="images/SMICS.png" width="400" hspace="5">
+<a href= "https://www.youtube.com/watch?v=GwKuFREOgmo" >This video demonstrates slime mold's impressive intelligence.</a>   
 
-<a href= "https://www.youtube.com/watch?v=GwKuFREOgmo" >This video demonstrates slime mold's impressive intelligence.</a>
-
-
+<img src="images/SMICS.png" width="400" hspace="5">  
 
 
-### Phase 2) OCT (Optical Coherence Tomography)
+
+
+
+
+### Phase 2: OCT (Optical Coherence Tomography)
 Build and test an <a href= "https://en.wikipedia.org/wiki/Optical_coherence_tomography" >Optical Coherence Tomography (OCT)</a> system that generates 3D images of biological samples such as slime mold. The baseline task of the team is to create an interferometer that can measure the height and density of a sample at a single point. This process can then be used to generate 3D models of the sample by scanning a 2D area and plotting the heights in 3D. 
 
 <img src="images/interferometer.png" width="600" hspace="5">
