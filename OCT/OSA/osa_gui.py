@@ -125,7 +125,7 @@ def plotSpectrumData():
 	y = values[i:len(values)]
 	y = y.split('\r\n')
 	z = zip(y[0::2], y[1::2])
-	mags = []
+	mags = [] # magnitudes along the wavelength axis
 	for i in range(len(z)-1):
 		elm = z[i]
 		mags = mags + [float(elm[0].split(",",1)[1])]
@@ -140,7 +140,7 @@ def plotSpectrumData():
 
 	# plot raw spectrum
 	plt.subplot(211)
-	wavelengths = np.linspace(755.63,805.63,len(mags)) # need to make this dynamic
+	wavelengths = np.linspace(755.63,805.63,len(mags)) # need to make this dynamic, can be pulled from spectrometer directly or through the same process that is used to get the magnitude values
 	plt.plot(wavelengths,mags)
 	plt.axis([np.amin(wavelengths), np.amax(wavelengths), np.amin(mags), np.amax(mags)*1.1])
 
