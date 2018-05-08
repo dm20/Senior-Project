@@ -3,7 +3,6 @@ import numpy as np
 from Tkinter import *
 import matplotlib
 import matplotlib.pyplot as plt
-from plotter_interface import plotter
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 ###########################
@@ -43,6 +42,8 @@ t1 = 0.0
 t2 = 0.0
 peak1 = 0.0
 peak2 = 0.0
+peaks = [];
+time = [];
 
 # Sweep the spectrum once on the OSA
 def sweepSingle():
@@ -112,10 +113,12 @@ def clearPlotWindow():
  
 # Plot the spectrum data in the GUI immediately  
 def plotSpectrumData():
+	# write Trace A to memory as "plot.CSV" in the slime mold folder
 	inst.write(':MMEMory:CDIRectory "SlimeMold"')
-	cmd = ':MMEMory:STORe:TRACE TRA, CSV,"plot",INT'  #WORKS!!!!!
+	cmd = ':MMEMory:STORe:TRACE TRA, CSV,"plot",INT'  
 	inst.write(cmd)
 
+	# pull raw spectrum from memory
 	values = (inst.query(':MMEMory:DATA? "plot.CSV"'))
 	s = "[TRACE DATA]";
 	i = values.index(s) + len(s) + 4
@@ -127,27 +130,43 @@ def plotSpectrumData():
 		elm = z[i]
 		mags = mags + [float(elm[0].split(",",1)[1])]
 		mags = mags + [float(elm[1].split(",",1)[1])]
-
 	zeros = [0] * (len(mags)/2);
+	# zero pad the raw data from the OSA
 	mags = zeros + mags + zeros
 
-	pf = plotter()
 	fig = plt.figure(1,figsize=(7.1, 7))
 	canvas = FigureCanvasTkAgg(fig, master=root)
 	plot_widget = canvas.get_tk_widget()
 
+	# plot raw spectrum
 	plt.subplot(211)
-	# data = pf.getSpectrumData('fringe')
-	wavelengths = np.linspace(755.63,805.63,len(mags))
+	wavelengths = np.linspace(755.63,805.63,len(mags)) # need to make this dynamic
 	plt.plot(wavelengths,mags)
 	plt.axis([np.amin(wavelengths), np.amax(wavelengths), np.amin(mags), np.amax(mags)*1.1])
 
 	plt.subplot(212)
+	# apply IFFT to raw spectrum to get peaks
+	global peaks
 	peaks = np.unwrap(np.fft.fftshift(np.abs(np.fft.ifft(mags))))
-	time = np.linspace(0,1e-9,len(mags))
+	
+	# below is translated from oct_Script.m
+	f = []
+	w = []
+	# divide by 1 nm
+	for i in range(len(mags)):
+		w[i] = mags[i]*(1e-9)
+	# convert to frequency
+	for i in range(len(mags)):
+		f[i] = 3e8 / w[i]
+	# calculate time axis
+	DeltaT = np.abs(1/(f[2]-f[1]))
+	global time
+	time = np.linspace(-DeltaT/2,DeltaT/2,len(f))
+	
+	# plot IFFT of spectrum (peaks)
 	plt.plot(time,peaks,color='red')
 	plt.axis([np.amin(time), np.amax(time), np.amin(peaks), np.amax(peaks)*1.1])
-	
+				   
 	plt.hold(True)
 	computeWidth()
 	findPeaks()
@@ -162,10 +181,7 @@ def findPeaks():
 	return
 
 def computeWidth():
-	pf = plotter()
-	x = pf.getSpectrumData('peak')
-	y = np.linspace(0,1e-9,len(x))
-	z = zip(x,y) #pair the magnitude values at each time with their corresponding time in the format: (mag value, time)
+	z = zip(peaks,time) #pair the magnitude values at each time with their corresponding time in the format: (raw data value, time instance)
 	z.sort() #sort all the magnitude-time pairs 
 	global peak1
 	peak1 = z[len(z) - 1] # one of the peaks is the absolute max of all magnitude-time pairs
@@ -184,14 +200,11 @@ def computeWidth():
 	while (abs(peak2[1] - t1) <= minimumTimeDelta): 
 		peak2 = z[len(z) - i] # go through the list of ordered pairs until the other peak is found
 		i+=1
-	global t2
 	t2 = peak2[1]
-	global peak2 
 	peak2 = peak2[0]
-	global peak1
 	peak1 = peak1[0]
 	T = abs(t2-t1)
-	c = 2.998e8 / 1.00029 #refraction index of air = 1.00029
+	c = 3e8 / 1.00029 #refraction index of air = 1.00029
 	global height
 	height = c * T
 	updateHeightMeasurement(height)
