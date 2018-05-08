@@ -15,7 +15,7 @@ a simple yet fascinating amoeba.
 ### Phase 2) OCT (Optical Coherence Tomography)
 Build and test an <a href= "https://en.wikipedia.org/wiki/Optical_coherence_tomography" >Optical Coherence Tomography (OCT)</a> system that generates 3D images of biological samples such as slime mold. The baseline task of the team is to create an interferometer that can measure the height and density of a sample at a single point. This process can then be used to generate 3D models of the sample by scanning a 2D area and plotting the heights in 3D. 
 
-<img src="images/interferometer.png" width="400" hspace="5">
+<img src="images/interferometer.png" width="600" hspace="5">
 
 ## Overview: 
 This repository contains the code for Raspbeery Pi camera and growth tracking system user interface. 
