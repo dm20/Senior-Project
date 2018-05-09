@@ -1,0 +1,19 @@
+###############################################################################
+# This script makes a desktop icon for the GUI on Raspberry Pi
+
+# 1) open a terminal window
+# 2) make sure the GUI is executable by typing 'sudo chmod +x Bio_Dept_GUI.py'
+# 3) now type 'sudo nano slime.desktop'
+# 4) then enter the code below
+# 5) when finished, type keyboard shortcut 'ctrl X' 
+#    followed by the 'y' character to save changes and exit the nano editor
+
+###############################################################################
+
+[Desktop Entry]
+Name=Physarum Capture App              # Name underneath the icon
+Exec=/home/pi/Picamera/Bio_Dept_GUI.py # the executable that the icon points to
+Icon=/media/slimepic.gif               # the path of the icon's image
+Terminal=false 
+Type=Application
+Categories=imaging
