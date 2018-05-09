@@ -9,6 +9,8 @@ locally. Biology department students and staff can access the photos remotely by
 Pi with RealVNC viewer or directly from the Pi via touchscreen. Also contained in this repository
 are the programs used to calculate sample height based on the spectral data produced by the OCT system.
 
+### If you would like to try and build these systems yourself, download the guide contained in 'hardware_instructions'
+
 *Physarum Polycephalum Plasmodium (Slime Mold)*
 ## Purpose:
 ### Phase 1: SMICS (Slime Mold Incubator Camera System)
