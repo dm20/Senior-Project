@@ -31,7 +31,7 @@ a simple yet fascinating amoeba.
 ### Phase 2: OCT (Optical Coherence Tomography)
 Build and test an <a href= "https://en.wikipedia.org/wiki/Optical_coherence_tomography" >Optical Coherence Tomography (OCT)</a> system that generates 3D images of biological samples such as slime mold. The baseline task of the team is to create an interferometer that can measure the height and density of a sample at a single point. This process can then be used to generate 3D models of the sample by scanning a 2D area and plotting the heights in 3D. 
 
-<img src="images/interferometer.png" width="600" hspace="5">
+<img src="images/interferometer.png" width="600" hspace="5"><img src="images/interferometer_real_life.png" width="600" hspace="5">
 
 ## Status:
 SMICS has been delivered to the LMU Biology Department and is in use. The interferometer was successfully set up and can measure a sample height with resolution of 25 micrometer over a 9mm range (sample heights can be up to 9mm).
